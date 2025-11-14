@@ -41,6 +41,7 @@ services:
       - "3414:3414"   # Grin P2P
       - "3413:3413"   # Foreign API
       - "3415:3415"   # Owner API (falls genutzt)
+      - "3416:8080"   # Qt-Controller HTTP-API nach außen
 
     environment:
       GRIN_CHAIN_TYPE: Mainnet
