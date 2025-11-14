@@ -3,7 +3,7 @@ manifestVersion: 1
 id: grin-node
 name: Grin Node
 tagline: Full Mimblewimble/Grin node with a powerful UI dashboard.
-icon: https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/main/public/grin-node/icons/logo.png
+icon: https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node/icons/logo.png
 category: Cryptocurrencies
 version: "0.1.0"
 port: 80
@@ -31,11 +31,11 @@ repo: https://github.com/wiesche89/grin-node-controller
 support: https://github.com/wiesche89/grin-node-controller/issues
 
 gallery:
-  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/main/public/grin-node/icons/galleryHome.png
-  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/main/public/grin-node/icons/galleryMap.png
-  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/main/public/grin-node/icons/galleryPeers.png
-  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/main/public/grin-node/icons/galleryTransaction.png
-  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/main/public/grin-node/icons/galleryChain.png
+  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node/icons/galleryHome.png
+  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node/icons/galleryMap.png
+  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node/icons/galleryPeers.png
+  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node/icons/galleryTransaction.png
+  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node/icons/galleryChain.png
 
 releaseNotes: >-
   Initial release of the Grin Node for Umbrel.  
