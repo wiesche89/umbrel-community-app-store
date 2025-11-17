@@ -27,28 +27,25 @@ services:
   # Backend-Controller + eigentlicher Grin Node
   controller:
     image: wiesche89/grin-node-controller:0.2.0
-    user: "appuser"
+    user: "0:0"          # root
     init: true
     restart: unless-stopped
 
-    # Persistente Daten für Chain + Config
     volumes:
-      - ${APP_DATA_DIR}/grin-rust-home:/home/appuser/.grin
-      - ${APP_DATA_DIR}/grinpp-home:/home/appuser/.GrinPP
+      - ${APP_DATA_DIR}/grin-rust-home:/root/.grin
+      - ${APP_DATA_DIR}/grinpp-home:/root/.GrinPP
 
-    # Externe Ports für P2P & APIs
     ports:
-      - "3414:3414"   # Grin P2P
-      - "3413:3413"   # Foreign API
-      - "3415:3415"   # Owner API (falls genutzt)
-      - "3416:8080"   # Qt-Controller HTTP-API nach außen
+      - "3414:3414"
+      - "3413:3413"
+      - "3415:3415"
+      - "3416:8080"
 
     environment:
-      # Pfade/Args für die Node-Wrapper (im Container)
       GRIN_RUST_BIN: "/opt/nodes/grin-rust/grin"
-      GRIN_RUST_DATADIR: "/home/appuser/.grin/main"
+      GRIN_RUST_DATADIR: "/root/.grin/main"
       GRIN_RUST_ARGS: "--no-tui"
 
       GRINPP_BIN: "/opt/nodes/grinpp/grin"
-      GRINPP_DATADIR: "/home/appuser/.GrinPP"
+      GRINPP_DATADIR: "/root/.GrinPP"
       GRINPP_ARGS: "--public-node-api"
