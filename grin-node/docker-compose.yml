@@ -33,8 +33,11 @@ services:
 
     # Persistente Daten für Chain + Config
     volumes:
-      - ${APP_DATA_DIR}/grin/data:/data
-      - ${APP_DATA_DIR}/grin/config:/config
+      # Rust-Node Home (~/.grin) persistent
+      - ./data/grin-rust-home:/home/appuser/.grin
+
+      # Grin++ Home (~/.GrinPP) persistent
+      - ./data/grinpp-home:/home/appuser/.GrinPP
 
     # Externe Ports für P2P & APIs
     ports:
@@ -44,6 +47,11 @@ services:
       - "3416:8080"   # Qt-Controller HTTP-API nach außen
 
     environment:
-      GRIN_CHAIN_TYPE: Mainnet
-      GRIN_HOME: /data
-      RUST_BACKTRACE: "1"
+      # Pfade/Args für die Node-Wrapper (im Container)
+      GRIN_RUST_BIN: "/opt/nodes/grin-rust/grin"
+      GRIN_RUST_DATADIR: "/home/appuser/.grin/main"
+      GRIN_RUST_ARGS: "--no-tui"
+
+      GRINPP_BIN: "/opt/nodes/grinpp/grin"
+      GRINPP_DATADIR: "/home/appuser/.GrinPP"
+      GRINPP_ARGS: "--public-node-api"
