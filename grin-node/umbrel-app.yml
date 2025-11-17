@@ -5,7 +5,7 @@ name: Grin Node
 tagline: Full Mimblewimble/Grin node with a powerful UI dashboard.
 icon: https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node/icons/logo.png
 category: Cryptocurrencies
-version: "0.2.0"
+version: "0.2.1"
 port: 3410
 
 description: >-
