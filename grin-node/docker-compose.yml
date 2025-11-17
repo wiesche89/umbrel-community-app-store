@@ -32,9 +32,9 @@ services:
     restart: unless-stopped
 
     # Persistente Daten für Chain + Config
-  volumes:
-    - ${APP_DATA_DIR}/grin-rust-home:/home/appuser/.grin
-    - ${APP_DATA_DIR}/grinpp-home:/home/appuser/.GrinPP
+    volumes:
+      - ${APP_DATA_DIR}/grin-rust-home:/home/appuser/.grin
+      - ${APP_DATA_DIR}/grinpp-home:/home/appuser/.GrinPP
 
     # Externe Ports für P2P & APIs
     ports:
