@@ -6,9 +6,9 @@ services:
   app_proxy:
     environment:
       # Format: <app-id>_<docker-service-name>_1
-      # app-id = grin-node  (aus umbrel-app.yml)
+      # app-id = grin-node-testnet  (aus umbrel-app.yml)
       # service-name = ui   (siehe unten)
-      APP_HOST: grin-node_ui_1_testnet
+      APP_HOST: grin-node-testnet_ui_1
       # Interner Port im UI-Container (Nginx lauscht auf 80)
       APP_PORT: 80
 
