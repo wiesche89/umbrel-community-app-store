@@ -1,0 +1,51 @@
+manifestVersion: 1
+
+id: grin-node-testnet
+name: Grin Node Testnet
+tagline: Full Mimblewimble/Grin node with a powerful UI dashboard.
+icon: https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node-testnet/icons/logo.png
+category: Cryptocurrencies
+version: "0.2.2"
+port: 13410
+
+description: >-
+  Run a full Mimblewimble/Grin Node or Grin++ Node directly on your Umbrel OS.  
+  This app includes a complete dashboard to monitor chain sync,
+  peers, blocks, transactions, and a geo map of connected nodes.
+
+  Features:
+    • Full Rust Grin node (v5.4+)
+    • Full Grin++ node (v1.2.8+)
+    • Real-time dashboard UI
+    • Peer explorer with ban/unban
+    • Transaction pool visualizer
+    • Full block explorer (headers/inputs/outputs/kernels)
+    • World map of active peers
+    • Auto-refresh and live sync status
+    • Persistent chain data
+
+developer: wiesche89
+website: https://github.com/wiesche89
+submitter: wiesche89
+submission: https://github.com/wiesche89/umbrel-community-app-store
+repo: https://github.com/wiesche89/grin-node-controller
+support: https://github.com/wiesche89/grin-node-controller/issues
+
+gallery:
+  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node-testnet/icons/galleryHome.png
+  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node-testnet/icons/galleryMap.png
+  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node-testnet/icons/galleryPeers.png
+  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node-testnet/icons/galleryTransaction.png
+  - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node-testnet/icons/galleryChain.png
+
+releaseNotes: >-
+  Initial release of the Grin Node for Umbrel.  
+  Includes the Grin 5.4 Rust node and the Grin++ node, full monitoring UI, 
+  persistent chain storage, peer map, block explorer,
+  and automatic service management.
+
+dependencies: []
+
+path: ""
+defaultUsername: ""
+defaultPassword: ""

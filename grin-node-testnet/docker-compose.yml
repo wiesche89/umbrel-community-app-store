@@ -1,0 +1,51 @@
+version: "3.7"
+
+services:
+
+  # Von Umbrel benutzt, um dein Web-UI zu erreichen
+  app_proxy:
+    environment:
+      # Format: <app-id>_<docker-service-name>_1
+      # app-id = grin-node  (aus umbrel-app.yml)
+      # service-name = ui   (siehe unten)
+      APP_HOST: grin-node_ui_1_testnet
+      # Interner Port im UI-Container (Nginx lauscht auf 80)
+      APP_PORT: 80
+
+  # Frontend/UI (Nginx/SPA/etc.)
+  ui:
+    image: wiesche89/grin-node-docker:0.2.4
+    restart: unless-stopped
+    depends_on:
+      - controller
+    environment:
+      # UI spricht den Controller über das interne Docker-Netz an.
+      # Falls dein Controller einen anderen Port nutzt, hier anpassen.
+      GRIN_NODE_CONTROLLER_URL: http://controller:8080
+    # Kein "ports:", Umbrel routet über app_proxy ins UI
+
+  # Backend-Controller + eigentlicher Grin Node
+  controller:
+    image: wiesche89/grin-node-controller:0.2.3
+    user: "0:0"          # root
+    init: true
+    restart: unless-stopped
+
+    volumes:
+      - ${APP_DATA_DIR}/grin-rust-home:/root/.grin
+      - ${APP_DATA_DIR}/grinpp-home:/root/.GrinPP
+
+    ports:
+      - "13414:13414"
+      - "13413:13413"
+      - "13415:13415"
+      - "13416:8080"
+
+    environment:
+      GRIN_RUST_BIN: "/opt/nodes/grin-rust/grin"
+      GRIN_RUST_DATADIR: "/root/.grin/test"
+      GRIN_RUST_ARGS: "--no-tui --testnet"
+
+      GRINPP_BIN: "/opt/nodes/grinpp/grin"
+      GRINPP_DATADIR: "/root/.GrinPP"
+      GRINPP_ARGS: "--public-node-api --floonet"
