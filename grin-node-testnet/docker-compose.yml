@@ -14,7 +14,7 @@ services:
 
   # Frontend/UI (Nginx/SPA/etc.)
   ui:
-    image: wiesche89/grin-node-docker:0.2.4
+    image: wiesche89/grin-node-docker-testnet:0.2.4
     restart: unless-stopped
     depends_on:
       - controller
@@ -25,7 +25,10 @@ services:
     user: "0:0"          # root
     init: true
     restart: unless-stopped
-
+    networks:
+      default:
+        aliases:
+          - controller-testnet
     volumes:
       - ${APP_DATA_DIR}/grin-rust-home-testnet:/root/.grin
       - ${APP_DATA_DIR}/grinpp-home-testnet:/root/.GrinPP
