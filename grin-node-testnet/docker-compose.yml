@@ -42,8 +42,8 @@ services:
     environment:
       GRIN_RUST_BIN: "/opt/nodes/grin-rust/grin"
       GRIN_RUST_DATADIR: "/root/.grin/test"
-      GRIN_RUST_ARGS: "--testnet --no-tui"
+      GRIN_RUST_ARGS: "--testnet, --no-tui"
 
       GRINPP_BIN: "/opt/nodes/grinpp/grin"
       GRINPP_DATADIR: "/root/.GrinPP"
-      GRINPP_ARGS: "--public-node-api --floonet"
+      GRINPP_ARGS: "--public-node-api, --floonet"
