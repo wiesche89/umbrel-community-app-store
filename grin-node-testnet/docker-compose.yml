@@ -42,6 +42,7 @@ services:
       - "13416:8080"
 
     environment:
+      GRIN_NODE_PORT: "13413"
       GRIN_RUST_BIN: "/opt/nodes/grin-rust/grin"
       GRIN_RUST_DATADIR: "/root/.grin/test"
       GRIN_RUST_ARGS: "--testnet,--no-tui"
