@@ -5,7 +5,7 @@ name: Grin Node Testnet
 tagline: Full Mimblewimble/Grin testnet node with a powerful UI dashboard.
 icon: https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node-testnet/icons/logo.png
 category: Cryptocurrencies
-version: "0.2.10"
+version: "0.2.11"
 port: 13410
 
 description: >-
