@@ -14,7 +14,7 @@ services:
 
   # Frontend/UI (Nginx/SPA/etc.)
   ui:
-    image: wiesche89/grin-node-docker:0.2.8
+    image: wiesche89/grin-node-docker:0.2.7
     restart: unless-stopped
     depends_on:
       - controller
