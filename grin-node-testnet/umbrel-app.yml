@@ -5,7 +5,7 @@ name: Grin Node Testnet
 tagline: Full Mimblewimble/Grin testnet node with a powerful UI dashboard.
 icon: https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node-testnet/icons/logo.png
 category: Cryptocurrencies
-version: "0.2.13"
+version: "0.2.14"
 port: 13410
 
 description: >-
@@ -14,7 +14,7 @@ description: >-
   of connected nodes. It is a separate instance from the mainnet app and uses isolated data directories.
 
   Features:
-    • Full Rust Grin node (Testnet, v5.4+)
+    • Full Rust Grin node (Testnet, v5.4.0)
     • Full Grin++ node (v1.2.8+)
     • Real-time dashboard UI
     • Peer explorer with ban/unban
