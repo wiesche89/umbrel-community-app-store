@@ -14,24 +14,23 @@ services:
 
   # Frontend/UI (Nginx/SPA/etc.)
   ui:
-    image: wiesche89/grin-node-docker:0.2.5
+    image: wiesche89/grin-node-docker:0.2.11
     restart: unless-stopped
     depends_on:
       - controller
     environment:
-      # UI spricht den Controller über das interne Docker-Netz an.
-      # Falls dein Controller einen anderen Port nutzt, hier anpassen.
-      GRIN_NODE_CONTROLLER_URL: http://controller:8080
-      CONTROLLER_PROXY: controller:8080
-    # Kein "ports:", Umbrel routet über app_proxy ins UI
+      CONTROLLER_PROXY: controller-mainnet:8080
 
   # Backend-Controller + eigentlicher Grin Node
   controller:
-    image: wiesche89/grin-node-controller:0.2.3
+    image: wiesche89/grin-node-runtime:v1.0.0
     user: "0:0"          # root
     init: true
     restart: unless-stopped
-
+    networks:
+      default:
+        aliases:
+          - controller-mainnet
     volumes:
       - ${APP_DATA_DIR}/grin-rust-home:/root/.grin
       - ${APP_DATA_DIR}/grinpp-home:/root/.GrinPP
