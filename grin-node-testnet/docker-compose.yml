@@ -23,7 +23,7 @@ services:
 
   # Backend-Controller + eigentlicher Grin Node
   controller:
-    image: wiesche89/grin-node-runtime:v1.0.0
+    image: wiesche89/grin-node-runtime:v1.1.0
     user: "0:0"          # root
     init: true
     restart: unless-stopped
