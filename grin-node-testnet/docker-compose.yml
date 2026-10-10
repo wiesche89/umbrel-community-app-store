@@ -2,51 +2,43 @@ version: "3.7"
 
 services:
 
-  # Von Umbrel benutzt, um dein Web-UI zu erreichen
   app_proxy:
     environment:
-      # Format: <app-id>_<docker-service-name>_1
-      # app-id = grin-node-testnet  (aus umbrel-app.yml)
-      # service-name = ui   (siehe unten)
       APP_HOST: grin-node-testnet_ui_1
-      # Interner Port im UI-Container (Nginx lauscht auf 80)
       APP_PORT: 80
+      PROXY_AUTH_WHITELIST: "/wallet/v2/foreign"
 
-  # Frontend/UI (Nginx/SPA/etc.)
   ui:
-    image: wiesche89/grin-node-docker:0.2.16
-    restart: unless-stopped
+    image: wiesche89/grin-node-docker:0.2.18@sha256:0dd095fad9b10a59b06e19861f580a213bfdd31a79fa857144bebff94848b42b
+    restart: on-failure
     depends_on:
       - controller
     environment:
       CONTROLLER_PROXY: controller-testnet:8080
 
-  # Backend-Controller + eigentlicher Grin Node
   controller:
-    image: wiesche89/grin-node-runtime:v1.2.6
-    user: "0:0"          # root
+    image: wiesche89/grin-node-runtime:v1.2.8@sha256:f999f2ffd54834d4788fdcf1f02a7fc1f3fe330d5d3d389236e7c6d201938b4f
+    user: "1000:1000"
     init: true
-    restart: unless-stopped
+    restart: on-failure
     networks:
       default:
         aliases:
           - controller-testnet
     volumes:
-      - ${APP_DATA_DIR}/grin-rust-home-testnet:/root/.grin
-      - ${APP_DATA_DIR}/grinpp-home-testnet:/root/.GrinPP
+      - ${APP_DATA_DIR}/data/grin-rust-home:/home/appuser/.grin
+      - ${APP_DATA_DIR}/data/grinpp-home:/home/appuser/.GrinPP
 
     ports:
       - "13414:13414"
-      - "13413:13413"
-      - "13415:13415"
-      - "13416:8080"
 
     environment:
+      HOME: /home/appuser
       GRIN_NODE_PORT: "13413"
       GRIN_RUST_BIN: "/opt/nodes/grin-rust/grin"
-      GRIN_RUST_DATADIR: "/root/.grin/test"
+      GRIN_RUST_DATADIR: "/home/appuser/.grin/test"
       GRIN_RUST_ARGS: "--testnet,--no-tui"
 
       GRINPP_BIN: "/opt/nodes/grinpp/grin"
-      GRINPP_DATADIR: "/root/.GrinPP"
-      GRINPP_ARGS: "--public-node-api,--floonet"
+      GRINPP_DATADIR: "/home/appuser/.GrinPP/FLOONET"
+      GRINPP_ARGS: "--floonet"

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+data_dir="${APP_DATA_ROOT:-${APP_DATA_DIR}/data}"
+install -d -m 700 -o 1000 -g 1000 \
+    "$data_dir/grin-rust-home" "$data_dir/grinpp-home"
