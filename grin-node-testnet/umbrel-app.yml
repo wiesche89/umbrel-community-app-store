@@ -7,10 +7,15 @@ name: Grin Node Testnet
 tagline: Run a Grin Testnet node
 icon: https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node-testnet/icons/logo.png
 category: crypto
-version: "0.2.27"
+version: "0.2.28"
 port: 13410
 
 description: >-
+  Upgrading from a version older than 0.2.27 requires uninstalling the app
+  and installing it again. Existing node data is not migrated.
+  This is a one-time change introduced in 0.2.27.
+
+
   Run a Grin Testnet node with Rust Grin or Grin++. View sync progress,
   peers, transactions and blocks in your browser.
 
@@ -32,7 +37,8 @@ gallery:
   - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node-testnet/icons/galleryChain.png
 
 releaseNotes: >-
-  Fresh installation required. Update UI and runtime with external wallet access.
+  Reinstall when upgrading from a version older than 0.2.27.
+  Update UI and runtime with external wallet access.
   Node Config is available for Grin++ only.
 
 dependencies: []
