@@ -1,4 +1,4 @@
-manifestVersion: 1
+manifestVersion: 1.1
 
 id: grin-node-testnet
 storage:
@@ -7,7 +7,7 @@ name: Grin Node Testnet
 tagline: Run a Grin Testnet node
 icon: https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node-testnet/icons/logo.png
 category: crypto
-version: "0.2.28"
+version: "0.2.29"
 port: 13410
 
 description: >-
@@ -37,8 +37,10 @@ gallery:
   - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node-testnet/icons/galleryChain.png
 
 releaseNotes: >-
-  Reinstall when upgrading from a version older than 0.2.27.
-  Update UI and runtime with external wallet access.
+  Fix the dashboard Start button remaining unavailable after stopping Rust Grin
+  or Grin++. Update the UI to 0.2.20.
+  Protect internal node management automatically behind the Umbrel login.
+  External wallets continue to use the node API key.
   Node Config is available for Grin++ only.
 
 dependencies: []

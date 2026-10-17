@@ -9,22 +9,22 @@ services:
       PROXY_AUTH_WHITELIST: "/wallet/v2/foreign"
 
   ui:
-    image: wiesche89/grin-node-docker:0.2.18@sha256:0dd095fad9b10a59b06e19861f580a213bfdd31a79fa857144bebff94848b42b
+    image: wiesche89/grin-node-docker:0.2.20@sha256:695491adf91c8f7af8d34669bbbce63c44f4c775aac7da0d6ad9c1eaa6d9e104
     restart: on-failure
     depends_on:
       - controller
     environment:
-      CONTROLLER_PROXY: controller-testnet:8080
+      TRUSTED_PROXY_HOST: grin-node-testnet_app_proxy_1
+      CONTROLLER_PASSWORD: "${APP_GRIN_NODE_TESTNET_CONTROLLER_PASSWORD:?Controller secret is required}"
+      CONTROLLER_PROXY: grin-node-testnet_controller_1:8080
 
   controller:
-    image: wiesche89/grin-node-runtime:v1.2.8@sha256:f999f2ffd54834d4788fdcf1f02a7fc1f3fe330d5d3d389236e7c6d201938b4f
+    image: wiesche89/grin-node-runtime:v1.2.9@sha256:c6304c6eba39ccef22d652f5e2c520b5a695f2a37498f04b2d3f59d5e2e015d4
+    command: ["--require-auth"]
     user: "1000:1000"
     init: true
     restart: on-failure
-    networks:
-      default:
-        aliases:
-          - controller-testnet
+    stop_grace_period: 1m
     volumes:
       - ${APP_DATA_DIR}/data/grin-rust-home:/home/appuser/.grin
       - ${APP_DATA_DIR}/data/grinpp-home:/home/appuser/.GrinPP
@@ -33,6 +33,7 @@ services:
       - "13414:13414"
 
     environment:
+      CONTROLLER_PASSWORD: "${APP_GRIN_NODE_TESTNET_CONTROLLER_PASSWORD:?Controller secret is required}"
       HOME: /home/appuser
       GRIN_NODE_PORT: "13413"
       GRIN_RUST_BIN: "/opt/nodes/grin-rust/grin"
