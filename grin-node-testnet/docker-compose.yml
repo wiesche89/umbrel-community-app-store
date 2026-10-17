@@ -9,12 +9,12 @@ services:
       PROXY_AUTH_WHITELIST: "/wallet/v2/foreign"
 
   ui:
-    image: wiesche89/grin-node-docker:0.2.20@sha256:695491adf91c8f7af8d34669bbbce63c44f4c775aac7da0d6ad9c1eaa6d9e104
+    image: wiesche89/grin-node-docker:0.2.21@sha256:a84b758bcfad474aca0afe9cc518013dc9fac39512ab4424fccfb351fc2a8f2a
     restart: on-failure
     depends_on:
       - controller
     environment:
-      TRUSTED_PROXY_HOST: grin-node-testnet_app_proxy_1
+      TRUSTED_PROXY_MODE: host
       CONTROLLER_PASSWORD: "${APP_GRIN_NODE_TESTNET_CONTROLLER_PASSWORD:?Controller secret is required}"
       CONTROLLER_PROXY: grin-node-testnet_controller_1:8080
 
