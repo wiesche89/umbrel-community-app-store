@@ -7,7 +7,7 @@ name: Grin Node Testnet
 tagline: Run a Grin Testnet node
 icon: https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node-testnet/icons/logo.png
 category: crypto
-version: "0.2.31"
+version: "0.2.32"
 port: 13410
 
 description: >-
@@ -37,9 +37,9 @@ gallery:
   - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node-testnet/icons/galleryChain.png
 
 releaseNotes: >-
-  Fix the loading indicator remaining active after failed node actions.
-  Reduce controller request delays and signal Rust Grin directly when stopping.
-  Update the UI to 0.2.22 and controller to 0.0.4.
+  Fix start, stop and restart handling in the browser.
+  Restore status updates and clear stale dashboard values after stopping.
+  Update the UI to 0.2.23.
 
 dependencies: []
 

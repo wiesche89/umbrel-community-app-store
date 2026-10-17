@@ -9,7 +9,7 @@ services:
       PROXY_AUTH_WHITELIST: "/wallet/v2/foreign"
 
   ui:
-    image: wiesche89/grin-node-docker:0.2.22@sha256:ab821ea6569be973c4100ba992409e1f8033bc580c40449b27186624aad53d20
+    image: wiesche89/grin-node-docker:0.2.23@sha256:acfd3e29fd94934f19f708c48d05352a0eb55ee376540492d78cb648db6e0082
     restart: on-failure
     depends_on:
       - controller
