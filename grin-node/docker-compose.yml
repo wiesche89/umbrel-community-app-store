@@ -2,50 +2,43 @@ version: "3.7"
 
 services:
 
-  # Von Umbrel benutzt, um dein Web-UI zu erreichen
   app_proxy:
     environment:
-      # Format: <app-id>_<docker-service-name>_1
-      # app-id = grin-node  (aus umbrel-app.yml)
-      # service-name = ui   (siehe unten)
       APP_HOST: grin-node_ui_1
-      # Interner Port im UI-Container (Nginx lauscht auf 80)
       APP_PORT: 80
+      PROXY_AUTH_WHITELIST: "/wallet/v2/foreign"
 
-  # Frontend/UI (Nginx/SPA/etc.)
   ui:
-    image: wiesche89/grin-node-docker:0.2.16
-    restart: unless-stopped
+    image: wiesche89/grin-node-docker:0.2.24@sha256:189ddff7506aaa485a916bf8909c07682366384b593cc8633755b5c2bb96aa5c
+    restart: on-failure
     depends_on:
       - controller
     environment:
-      CONTROLLER_PROXY: controller-mainnet:8080
+      TRUSTED_PROXY_MODE: host
+      CONTROLLER_PASSWORD: "${APP_GRIN_NODE_CONTROLLER_PASSWORD:?Controller secret is required}"
+      CONTROLLER_PROXY: grin-node_controller_1:8080
 
-  # Backend-Controller + eigentlicher Grin Node
   controller:
-    image: wiesche89/grin-node-runtime:v1.0.1
-    user: "0:0"          # root
+    image: wiesche89/grin-node-runtime:v1.0.5@sha256:da5bde5326ca7ed0cc0875992fc6eec46acb8351b558f0c1f5f44954a86118cb
+    command: ["--require-auth"]
+    user: "1000:1000"
     init: true
-    restart: unless-stopped
-    networks:
-      default:
-        aliases:
-          - controller-mainnet
+    restart: on-failure
+    stop_grace_period: 1m
     volumes:
-      - ${APP_DATA_DIR}/grin-rust-home:/root/.grin
-      - ${APP_DATA_DIR}/grinpp-home:/root/.GrinPP
+      - ${APP_DATA_DIR}/data/grin-rust-home:/home/appuser/.grin
+      - ${APP_DATA_DIR}/data/grinpp-home:/home/appuser/.GrinPP
 
     ports:
       - "3414:3414"
-      - "3413:3413"
-      - "3415:3415"
-      - "3416:8080"
 
     environment:
+      CONTROLLER_PASSWORD: "${APP_GRIN_NODE_CONTROLLER_PASSWORD:?Controller secret is required}"
+      HOME: /home/appuser
       GRIN_RUST_BIN: "/opt/nodes/grin-rust/grin"
-      GRIN_RUST_DATADIR: "/root/.grin/main"
+      GRIN_RUST_DATADIR: "/home/appuser/.grin/main"
       GRIN_RUST_ARGS: "--no-tui"
 
       GRINPP_BIN: "/opt/nodes/grinpp/grin"
-      GRINPP_DATADIR: "/root/.GrinPP"
-      GRINPP_ARGS: "--public-node-api"
+      GRINPP_DATADIR: "/home/appuser/.GrinPP/MAINNET"
+      GRINPP_ARGS: ""

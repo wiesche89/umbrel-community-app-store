@@ -1,28 +1,27 @@
-manifestVersion: 1
+manifestVersion: 1.1
 
 id: grin-node
+storage:
+  dataRoot: data
 name: Grin Node
-tagline: Full Mimblewimble/Grin node with a powerful UI dashboard.
+tagline: Run a Grin Mainnet node
 icon: https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node/icons/logo.png
-category: Cryptocurrencies
-version: "0.2.7"
+category: crypto
+version: "0.2.10"
 port: 3410
 
 description: >-
-  Run a full Mimblewimble/Grin Node or Grin++ Node directly on your Umbrel OS.  
-  This app includes a complete dashboard to monitor chain sync,
-  peers, blocks, transactions, and a geo map of connected nodes.
+  Upgrading from a version older than 0.2.8 requires uninstalling the app
+  and installing it again. Existing node data is not migrated.
+  This is a one-time change introduced in 0.2.8.
 
-  Features:
-    • Full Rust Grin node (v5.5.2)
-    • Full Grin++ node (v1.2.8+)
-    • Real-time dashboard UI
-    • Peer explorer with ban/unban
-    • Transaction pool visualizer
-    • Full block explorer (headers/inputs/outputs/kernels)
-    • World map of active peers
-    • Auto-refresh and live sync status
-    • Persistent chain data
+
+  Run a Grin Mainnet node with Rust Grin or Grin++. View sync progress,
+  peers, transactions and blocks in your browser.
+
+
+  Open the dashboard and start a node. Use the Wallet page to connect an
+  external wallet. Node Config is available for Grin++ only.
 
 developer: wiesche89
 website: https://github.com/wiesche89
@@ -39,7 +38,10 @@ gallery:
   - https://raw.githubusercontent.com/wiesche89/umbrel-community-app-store/master/grin-node/icons/galleryChain.png
 
 releaseNotes: >-
-  Update UI to 0.2.16 and Rust Grin to v5.5.2.
+  Update the UI to 0.2.24 and the Mainnet runtime to v1.0.5.
+  Fix node start/stop controls and show a notification while the node API starts.
+  Protect node management behind the Umbrel login without an additional password prompt.
+  External wallets connect through the dashboard URL using the node API key.
 
 dependencies: []
 

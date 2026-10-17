@@ -1,7 +1,7 @@
 # Grin Node for Umbrel
 
-Run a full **Mimblewimble/Grin node or Grin++ node** with a powerful, modern dashboard directly on your Umbrel OS.  
-This app bundles a Rust-based Grin node, a controller backend, and a full web UI for monitoring everything in real time.
+Run a full **Mimblewimble/Grin node or Grin++ node** with a powerful, modern dashboard directly on your Umbrel OS.
+This app bundles Rust Grin and Grin++, a Qt/C++ controller backend, and a full web UI for monitoring everything in real time.
 
 ---
 
@@ -20,11 +20,11 @@ This app bundles a Rust-based Grin node, a controller backend, and a full web UI
   - Live peer performance metrics
 - **Storage Persistence**
   - All chain data stored under Umbrel’s app directory
-- **Automatic Startup**
-  - Node restarts automatically with Umbrel
+- **Node Control**
+  - Start and stop the selected node from the dashboard
 - **Two-container architecture**
-  - `ui` → Nginx-hosted web interface  
-  - `controller` → Rust-based backend + Grin node
+  - `ui` → Nginx-hosted web interface
+  - `controller` → Qt/C++ backend + Rust Grin and Grin++
 
 ---
 
@@ -34,36 +34,43 @@ This app bundles a Rust-based Grin node, a controller backend, and a full web UI
 Umbrel Reverse Proxy
         │
         ▼
-   app_proxy  ──────►  ui container (Ngininx, Port 80)
+   app_proxy  ──────►  ui container (Nginx, Port 80)
                           │
                           ▼
                 controller container (Grin backend)
 ```
 
-- **UI image:** `wiesche89/grin-node-docker:0.1.0`  
-- **Controller image:** `wiesche89/grin-node-controller:0.1.0`
+Packages:
+
+| App | App version | UI image version | Runtime image version |
+| --- | --- | --- | --- |
+| Mainnet | 0.2.10 | 0.2.24 | v1.0.5 |
+| Testnet | 0.2.33 | 0.2.24 | v1.2.10 |
+
+Images: `wiesche89/grin-node-docker` and `wiesche89/grin-node-runtime`.
 
 ---
 
 ## Installation (via Community App Store)
 
-1. Open Umbrel → App Store  
-2. Click the **three dots** in the top right  
-3. Select **Community App Stores**  
+1. Open Umbrel → App Store
+2. Click the **three dots** in the top right
+3. Select **Community App Stores**
 4. Add this store URL:
 
 ```
 https://github.com/wiesche89/umbrel-community-app-store
 ```
 
-5. The **Grin Node** app will appear under your custom store  
+5. Choose **Grin Node** (Mainnet) or **Grin Node Testnet** in your custom store.
 6. Click **Install**
 
 Umbrel will deploy:
-- The UI frontend  
-- The controller backend  
-- The Rust Grin node  
-- The Grin++ node 
+
+- The UI frontend
+- The controller backend
+- The Rust Grin node
+- The Grin++ node
 - Persistent volumes for chain + config
 
 ---
@@ -73,16 +80,24 @@ Umbrel will deploy:
 All blockchain and config data is stored persistently inside Umbrel:
 
 ```
-<umbrel>/app-data/grin-node/
-    ├── grin/
-    │   ├── data/       ← chain data (rust node)
-    │   └── config/     ← node configuration
+<umbrel>/app-data/grin-node/             # Mainnet
+    └── data/
+        ├── grin-rust-home/
+        └── grinpp-home/
+<umbrel>/app-data/grin-node-testnet/     # Testnet
+    └── data/
+        ├── grin-rust-home/
+        └── grinpp-home/
 ```
 
 This means:
 
 - Updating the app **does not delete the blockchain**
-- Removing & reinstalling the app **keeps your chain + config**
+- Uninstalling the app **deletes its data**. Back up needed configuration and credentials first.
+
+Mainnet upgrades from versions before `0.2.8` and Testnet upgrades from versions
+before `0.2.27` require reinstalling; old data is not migrated. Back up needed
+configuration and credentials before uninstalling. Later updates retain the data directories.
 
 ---
 
@@ -90,28 +105,32 @@ This means:
 
 External ports exposed by the controller container:
 
-| Port | Purpose            |
-|------|--------------------|
-| 3414 | Grin P2P           |
-| 3413 | Foreign API        |
-| 3415 | Owner API          |
+| Port | Purpose |
+| --- | --- |
+| 3414 | Mainnet P2P |
+| 13414 | Testnet P2P |
 
-The UI is routed internally through Umbrel’s reverse proxy and does not expose ports directly.
+Neither app publishes controller or node RPC ports. External wallets use
+`/wallet/v2/foreign` on the dashboard origin and the node API key shown in the UI.
+
+The UI uses Umbrel’s app proxy on port 3410 (Mainnet) or 13410 (Testnet).
 
 ---
 
 ## Accessing the Dashboard
 
-After installation, open:
+After installation, open the app from Umbrel, or use:
 
 ```
-http://umbrel.local/grin-node
+http://umbrel.local:3410     # Mainnet
+http://umbrel.local:13410    # Testnet
 ```
 
 or via your Umbrel device IP:
 
 ```
-http://<umbrel-ip>/grin-node
+http://<umbrel-ip>:3410      # Mainnet
+http://<umbrel-ip>:13410     # Testnet
 ```
 
 ---
@@ -131,7 +150,7 @@ Restart the app from the Umbrel UI if needed.
 Initial block download may take time depending on SSD speed and internet.
 
 ### Ports already in use
-If another app uses 3414/3413/3415, installation may fail.  
+If another app uses one of the listed ports, installation may fail.
 Stop the conflicting app, or modify ports manually.
 
 ---
@@ -141,26 +160,31 @@ Stop the conflicting app, or modify ports manually.
 This app uses two Docker images:
 
 ### UI
-- Docker Hub:  
+- Docker Hub:
   https://hub.docker.com/repository/docker/wiesche89/grin-node-docker
 
 ### Controller + Grin Node
-- Docker Hub:  
-  https://hub.docker.com/repository/docker/wiesche89/grin-node-controller
+- Docker Hub:
+  https://hub.docker.com/repository/docker/wiesche89/grin-node-runtime
 
 Pullable tags:
 
 ```
-wiesche89/grin-node-docker:0.1.0
-wiesche89/grin-node-controller:0.1.0
+# Mainnet
+wiesche89/grin-node-docker:0.2.24
+wiesche89/grin-node-runtime:v1.0.5
+
+# Testnet
+wiesche89/grin-node-docker:0.2.24
+wiesche89/grin-node-runtime:v1.2.10
 ```
 ---
 
 ## Credits
 
-- **Mimblewimble / Grin Developers** — https://github.com/mimblewimble/grin  
+- **Mimblewimble / Grin Developers** — https://github.com/mimblewimble/grin
 - **Grin++ Developers** — https://github.com/GrinPlusPlus/GrinPlusPlus
-- **Umbrel Team** — Community App Store framework  
+- **Umbrel Team** — Community App Store framework
 - **wiesche89** — Grin Node Controller, UI, packaging
   - https://github.com/wiesche89/grin-node-docker
   - https://github.com/wiesche89/grin-node-controller
@@ -171,5 +195,5 @@ wiesche89/grin-node-controller:0.1.0
 
 ## 📜 License
 
-MIT License  
+MIT License
 See `LICENSE` file for details.
