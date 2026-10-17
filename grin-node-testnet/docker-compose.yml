@@ -9,7 +9,7 @@ services:
       PROXY_AUTH_WHITELIST: "/wallet/v2/foreign"
 
   ui:
-    image: wiesche89/grin-node-docker:0.2.21@sha256:a84b758bcfad474aca0afe9cc518013dc9fac39512ab4424fccfb351fc2a8f2a
+    image: wiesche89/grin-node-docker:0.2.22@sha256:ab821ea6569be973c4100ba992409e1f8033bc580c40449b27186624aad53d20
     restart: on-failure
     depends_on:
       - controller
@@ -19,7 +19,7 @@ services:
       CONTROLLER_PROXY: grin-node-testnet_controller_1:8080
 
   controller:
-    image: wiesche89/grin-node-runtime:v1.2.9@sha256:c6304c6eba39ccef22d652f5e2c520b5a695f2a37498f04b2d3f59d5e2e015d4
+    image: wiesche89/grin-node-runtime:v1.2.10@sha256:8a5e7803fdc457fe2dcb590b6f8a90f1a72dbff8eda976c8b8b97eef552b0e1a
     command: ["--require-auth"]
     user: "1000:1000"
     init: true
